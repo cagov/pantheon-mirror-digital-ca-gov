@@ -5,10 +5,10 @@
  * @package micropackage/templates
  */
 
-namespace Micropackage\Templates;
+namespace BracketSpace\Notification\Vendor\Micropackage\Templates;
 
-use Micropackage\Filesystem\Filesystem;
-use Micropackage\Templates\Exceptions\StorageException;
+use BracketSpace\Notification\Vendor\Micropackage\Filesystem\Filesystem;
+use BracketSpace\Notification\Vendor\Micropackage\Templates\Exceptions\StorageException;
 
 /**
  * Storage class

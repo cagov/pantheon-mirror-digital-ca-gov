@@ -12,7 +12,7 @@
  * @package micropackage/dochooks
  */
 
-namespace Micropackage\DocHooks;
+namespace BracketSpace\Notification\Vendor\Micropackage\DocHooks;
 
 /**
  * HookTrait class

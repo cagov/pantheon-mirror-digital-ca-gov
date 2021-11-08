@@ -5,10 +5,10 @@
  * @package micropackage/requirements
  */
 
-namespace Micropackage\Requirements\Checker;
+namespace BracketSpace\Notification\Vendor\Micropackage\Requirements\Checker;
 
-use Micropackage\Requirements\Abstracts;
-use Micropackage\Requirements\Requirements;
+use BracketSpace\Notification\Vendor\Micropackage\Requirements\Abstracts;
+use BracketSpace\Notification\Vendor\Micropackage\Requirements\Requirements;
 
 /**
  * DocHooks Checker class
@@ -27,23 +27,23 @@ class DocHooks extends Abstracts\Checker {
 	 *
 	 * @since  1.0.0
 	 * @throws \Exception When provided value is not a string or numeric.
-	 * @param  mixed $enabled If dochooks should be enabled or disabled.
+	 * @param  string $value If dochooks should be enabled or disabled.
 	 * @return void
 	 */
-	public function check( $enabled ) {
+	public function check( $value ) {
 
-		if ( ! is_bool( $enabled ) ) {
+		if ( ! is_bool( $value ) ) {
 			throw new \Exception( 'DocHooks Check requires bool parameter' );
 		}
 
-		$reflector   = new \ReflectionClass( $this );
-		$has_comment = false !== strpos( $reflector->getMethod( 'check' )->getDocComment(), '@dochooks-test' );
+		$reflector = new \ReflectionClass( $this );
+		$comment   = $reflector->getMethod( 'check' )->getDocComment();
 
-		if ( ! $has_comment && $enabled ) {
+		if ( false === strpos( $comment, '@dochooks-test' ) && $value ) {
 			$this->add_error( __( 'Support for DocHooks is required', Requirements::$textdomain ) );
 		}
 
-		if ( $has_comment && ! $enabled ) {
+		if ( 0 <= strpos( $comment, '@dochooks-test' ) && ! $value ) {
 			$this->add_error( __( 'Support for DocHooks is superfluous', Requirements::$textdomain ) );
 		}
 

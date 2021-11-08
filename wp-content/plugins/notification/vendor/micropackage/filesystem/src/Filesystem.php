@@ -5,13 +5,12 @@
  * @package micropackage/filesystem
  */
 
-namespace Micropackage\Filesystem;
+namespace BracketSpace\Notification\Vendor\Micropackage\Filesystem;
 
 /**
  * Filesystem class
  *
- * @see https://developer.wordpress.org/reference/classes/wp_filesystem_base/#methods
- * @mixin \WP_Filesystem_Base
+ * @see Available methods: https://developer.wordpress.org/reference/classes/wp_filesystem_base/#methods
  */
 class Filesystem {
 
@@ -25,7 +24,7 @@ class Filesystem {
 	/**
 	 * WP Filesystem object
 	 *
-	 * @var \WP_Filesystem_Base
+	 * @var WP_Filesystem_*
 	 */
 	protected static $wp_filesystem;
 
@@ -85,7 +84,7 @@ class Filesystem {
 	 */
 	private static function init_wp_filesystem() {
 
-		if ( isset( self::$wp_filesystem ) ) {
+		if ( self::$wp_filesystem ) {
 			return;
 		}
 
@@ -136,7 +135,7 @@ class Filesystem {
 	 * @param  bool       $recursive Whether to act recursively.
 	 * @return bool                  True on success, false on failure.
 	 */
-	public function mkdir( $path = '', $chmod = false, $chown = false, $chgrp = false, $recursive = false ) {
+	public function mkdir( $path, $chmod = false, $chown = false, $chgrp = false, $recursive = false ) {
 
 		if ( ! self::$wp_filesystem instanceof \WP_Filesystem_Direct ) {
 			if ( $recursive ) {
@@ -148,6 +147,9 @@ class Filesystem {
 
 		// Safe mode fails with a trailing slash under certain PHP versions.
 		$path = untrailingslashit( $path );
+		if ( empty( $path ) ) {
+			return false;
+		}
 
 		if ( ! $chmod ) {
 			$chmod = FS_CHMOD_DIR;
@@ -228,7 +230,7 @@ class Filesystem {
 
 		$type = pathinfo( $this->path( $image_path ), PATHINFO_EXTENSION );
 
-		// Fix SVG MIME type.
+		// SVG mime type fix.
 		if ( 'svg' === $type ) {
 			$type = 'svg+xml';
 		}

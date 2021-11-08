@@ -5,9 +5,9 @@
  * @package micropackage/dochooks
  */
 
-namespace Micropackage\DocHooks;
+namespace BracketSpace\Notification\Vendor\Micropackage\DocHooks;
 
-use Micropackage\DocHooks\Helper\AnnotationTest;
+use BracketSpace\Notification\Vendor\Micropackage\DocHooks\Helper\AnnotationTest;
 
 /**
  * Helper class

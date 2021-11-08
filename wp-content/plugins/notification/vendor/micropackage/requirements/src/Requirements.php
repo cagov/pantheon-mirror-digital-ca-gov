@@ -5,11 +5,11 @@
  * @package micropackage/requirements
  */
 
-namespace Micropackage\Requirements;
+namespace BracketSpace\Notification\Vendor\Micropackage\Requirements;
 
-use Micropackage\Internationalization\Internationalization;
-use Micropackage\Requirements\Interfaces\Checkable;
-use Micropackage\Requirements\Checker;
+use BracketSpace\Notification\Vendor\Micropackage\Internationalization\Internationalization;
+use BracketSpace\Notification\Vendor\Micropackage\Requirements\Interfaces\Checkable;
+use BracketSpace\Notification\Vendor\Micropackage\Requirements\Checker;
 
 /**
  * Requirements class
@@ -99,7 +99,6 @@ class Requirements {
 				Checker\PHP::class,
 				Checker\PHPExtensions::class,
 				Checker\Plugins::class,
-				Checker\SSL::class,
 				Checker\Theme::class,
 				Checker\WP::class,
 			]
@@ -257,7 +256,7 @@ class Requirements {
 
 				echo '<ul style="list-style: disc; padding-left: 20px;">';
 					foreach ( $this->errors as $error ) {
-				echo '<li>' . $error . '</li>';
+						echo '<li>' . $error . '</li>';
 					}
 				echo '</ul>';
 

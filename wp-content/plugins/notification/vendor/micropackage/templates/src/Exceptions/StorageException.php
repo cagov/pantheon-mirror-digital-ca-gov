@@ -5,7 +5,7 @@
  * @package micropackage/templates
  */
 
-namespace Micropackage\Templates\Exceptions;
+namespace BracketSpace\Notification\Vendor\Micropackage\Templates\Exceptions;
 
 /**
  * StorageException class
