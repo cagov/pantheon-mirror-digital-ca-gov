@@ -688,19 +688,7 @@
 			success: function(response) {
 
                 $('.wpae-record-count').val(response.found_records);
-
-                vm.hasVariations = response.hasVariations;
-				if(vm.hasVariations) {
-
-					if($('#export_to_sheet').val() == 'xls' || $('#export_to_sheet').val() == 'xlsx') {
-						$('.csv_delimiter').hide();
-						$('.export_to_csv').slideDown();
-					}
-
-					$('.product_variations').show();
-
-				}
-
+				
 				$('.wp_all_export_filter_preloader').hide();
 
 				$('#filtering_result').html(response.html);
@@ -856,6 +844,8 @@
 					break;
 				case 'advanced_type':
 
+					$('a.auto-generate-template').hide();
+
 					$('.wpallexport-user-export-notice').hide();
 		    		$('.wpallexport-comments-export-notice').hide();
 		    		$('.wpallexport-shop_customer-export-notice').hide();
@@ -961,27 +951,29 @@
 							$('.wpallexport-shop_customer-export-notice').show();
 							$('.wpallexport-choose-file').find('.wpallexport-submit-buttons').hide();
 						}
-                        else if (postType == 'shop_coupon' && !$('#pmxe_woocommerce_addon_installed').val())
-                        {
-                            $('.wpallexport-shop_coupon-export-notice').show();
-                            $('.wpallexport-choose-file').find('.wpallexport-submit-buttons').hide();
-                        }
-                        else if (postType == 'shop_order')
-                        {
-                        	if(!($('#pmxe_woocommerce_addon_installed').val() || $('#pmxe_woocommerce_order_addon_installed').val())) {
-                                $('.wpallexport-shop_order-export-notice').show();
-                                $('.wpallexport-choose-file').find('.wpallexport-submit-buttons').hide();
-                            }
-                        }
-                        else if (postType == 'product')
-                        {
-                            if(!($('#pmxe_woocommerce_addon_installed').val() || $('#pmxe_woocommerce_order_addon_installed').val())) {
+            else if (postType == 'shop_coupon' && !$('#pmxe_woocommerce_addon_installed').val())
+            {
+               $('.wpallexport-shop_coupon-export-notice').show();
+               $('.wpallexport-choose-file').find('.wpallexport-submit-buttons').hide();
+            }
+            else if (postType == 'shop_order')
+            {
+               if(!($('#pmxe_woocommerce_addon_installed').val() || $('#pmxe_woocommerce_order_addon_installed').val())) {
+                  $('.wpallexport-shop_order-export-notice').show();
+                  $('.wpallexport-choose-file').find('.wpallexport-submit-buttons').hide();
+               }
+            }
+            else if (postType == 'product' && !$('#pmxe_woocommerce_addon_installed').val() && $('#WooCommerce_Installed').length)
+            {
 
-                                $('.wpallexport-product-export-notice').show();
-                                $('.wpallexport-choose-file').find('.wpallexport-submit-buttons').hide();
-                            }
-                        }
-						else
+                if(!($('#pmxe_woocommerce_addon_installed').val() || $('#pmxe_woocommerce_product_addon_installed').val())) {
+
+                    $('.wpallexport-product-export-notice').show();
+                    $('.wpallexport-choose-file').find('.wpallexport-submit-buttons').hide();
+
+                }
+            }
+            else
 						{
 							$('.wpallexport-choose-file').find('.wpallexport-submit-buttons').show();
 						}
@@ -1025,8 +1017,8 @@
                     $('.wpallexport-submit-buttons').hide();
                 }
 
-                if (value.indexOf('product') !== -1) {
-                    $('.wpallexport-product-export-notice').show();
+                if (value.indexOf('product') !== -1 && $('#WooCommerce_Installed').length) {
+                    $('.wpallexport-custom-product-export-notice').show();
                     $('.wpallexport-submit-buttons').hide();
                 }
 
@@ -1046,6 +1038,16 @@
             	$('#migrate-users-notice').slideDown();
             	return false;
 			}
+
+			if (export_type == 'shop_order' && !$('#woocommerce_add_on_pro_installed').length) {
+                $('#migrate-orders-notice').slideDown();
+                return false;
+			}
+
+            if (export_type == 'product' && !$('#woocommerce_add_on_pro_installed').length) {
+                $('#migrate-products-notice').slideDown();
+                return false;
+            }
 
 			$('input[name^=auto_generate]').val('1');
 
@@ -1078,6 +1080,7 @@
 
 				$('.wpallexport-user-export-notice').hide();
 		    	$('.wpallexport-comments-export-notice').hide();
+		    	$('.wpallexport-custom-product-export-notice').hide();
 		    	$('.wpallexport-shop_customer-export-notice').hide();
 		    	$('.wpallexport-taxonomies-export-notice').hide();
 

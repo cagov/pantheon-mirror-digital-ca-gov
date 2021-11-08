@@ -505,7 +505,9 @@ final class PMXE_Wpallimport
 							);
 						}
 
-						XmlExportWooCommerce::prepare_import_template( $options, self::$templateOptions, $cf_list, $attr_list, $element_name, $options['cc_label'][$ID] );
+						if($addons->isWooCommerceAddonActive() || $addons->isWooCommerceProductAddonActive()) {
+						    XmlExportWooCommerce::prepare_import_template( $options, self::$templateOptions, $cf_list, $attr_list, $element_name, $options['cc_label'][$ID] );
+					    }
 					}
 
 					break;
@@ -548,7 +550,7 @@ final class PMXE_Wpallimport
 
                     XmlExportTaxonomy::prepare_import_template( $options, self::$templateOptions, $element_name, $ID);
 
-					if($addons->isWooCommerceAddonActive()) {
+					if($addons->isWooCommerceAddonActive() || $addons->isWooCommerceOrderAddonActive()) {
 						XmlExportWooCommerceOrder::prepare_import_template( $options, self::$templateOptions, $element_name, $ID);
 					}
 

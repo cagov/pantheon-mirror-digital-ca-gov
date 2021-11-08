@@ -13,8 +13,10 @@ class PMXE_Export_Record extends PMXE_Model_Record {
 	
 	/**
 	 * Import all files matched by path
+	 *
 	 * @param callable[optional] $logger Method where progress messages are submmitted
-	 * @return PMXI_Import_Record
+	 *
+	 * @return PMXE_Export_Record
 	 * @chainable
 	 */
 	public function execute($logger = NULL, $cron = false) {
@@ -671,7 +673,7 @@ class PMXE_Export_Record extends PMXE_Model_Record {
     	if ( $options['export_to'] == 'xml' && ! empty($options['xml_template_type']) && in_array($options['xml_template_type'], array('custom', 'XmlGoogleMerchants')) ) return false;
 
         // Export only parent product do not support import bundle
-        if ( ! empty($options['cpt']) and in_array($options['cpt'][0], array('product', 'product_variation')) and class_exists('WooCommerce') and $options['export_variations'] != XmlExportEngine::VARIABLE_PRODUCTS_EXPORT_PARENT_AND_VARIATION){
+        if ( ! empty($options['cpt']) and in_array($options['cpt'][0], array('product', 'product_variation')) and class_exists('WooCommerce') and $options['export_variations'] == XmlExportEngine::VARIABLE_PRODUCTS_EXPORT_VARIATION){
             return false;
         }
 
@@ -681,8 +683,8 @@ class PMXE_Export_Record extends PMXE_Model_Record {
 
     /**
 	 * Clear associations with posts	 
-	 * @return PMXE_Import_Record
-	 * @chainable
+	 * @return PMXE_Export_Record
+     * @chainable
 	 */
 	public function deletePosts() {
 		$post = new PMXE_Post_List();					

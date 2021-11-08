@@ -160,7 +160,7 @@
 								</div>
 
 								<!-- Warning Messages -->
-								<?php if ( $addons->isWooCommerceAddonActive() && ! XmlExportWooCommerceOrder::$is_active && ! XmlExportComment::$is_active && ! XmlExportTaxonomy::$is_active ) : ?>
+								<?php if ( ($addons->isWooCommerceAddonActive() || $addons->isWooCommerceOrderAddonActive()) && ! XmlExportWooCommerceOrder::$is_active && ! XmlExportComment::$is_active && ! XmlExportTaxonomy::$is_active ) : ?>
 								<div class="wp-all-export-warning" <?php if ( empty($post['ids']) or count($post['ids']) > 1 ) echo 'style="display:none;"'; ?>>
 									<p></p>
 									<input type="hidden" id="warning_template" value="<?php _e("Warning: without %s you won't be able to re-import this data back to this site using WP All Import.", "wp_all_export_plugin"); ?>"/>
@@ -168,7 +168,7 @@
 								</div>
 								<?php endif; ?>
 
-								<?php if ( $addons->isWooCommerceAddonActive() && XmlExportWooCommerce::$is_active ) : ?>
+								<?php if ( $addons->isWooCommerceAddonActive() || $addons->isWooCommerceProductAddonActive() && XmlExportWooCommerce::$is_active ) : ?>
 								<input type="hidden" id="is_product_export" value="1"/>													
 								<?php endif; ?>
 
@@ -224,7 +224,14 @@
 										</div>
 										<input type="hidden" id="custom_xml_cdata_logic" value="<?php echo $post['custom_xml_cdata_logic']; ?>" name="custom_xml_cdata_logic" />
 										<input type="hidden" id="show_cdata_in_preview" value="<?php echo $post['show_cdata_in_preview']; ?>" name="show_cdata_in_preview" />
-										<div><?php include('variation_options.php'); ?></div>
+
+										<div>
+                                            <?php if( (XmlExportEngine::get_addons_service()->isWooCommerceAddonActive() || XmlExportEngine::get_addons_service()->isWooCommerceProductAddonActive()) && XmlExportWooCommerce::$is_active)
+                                            {
+                                                include('variation_options.php');
+                                            }
+                                            ?>
+                                        </div>
 										<div class="wp-all-export-product-bundle-warning warning-only-export-parent-products" style="display:none;">
 											<p><?php _e("You will not be able to reimport data to the product variations, and you will not be able to import these products to another site.", 'wp_all_export_plugin'); ?></p>
 										</div>
@@ -288,8 +295,10 @@
 											</div>
 										<?php endif; ?>
 										<div style="margin-left:20px;">
-                                            <?php
+                                            <?php if( (XmlExportEngine::get_addons_service()->isWooCommerceAddonActive() || XmlExportEngine::get_addons_service()->isWooCommerceProductAddonActive()) && XmlExportWooCommerce::$is_active)
+                                            {
                                                 include('variation_options.php');
+                                            }
                                             ?>
 										</div>
 										<div class="wp-all-export-product-bundle-warning" style="display:none;">

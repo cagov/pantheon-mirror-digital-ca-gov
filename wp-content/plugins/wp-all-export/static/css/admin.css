@@ -190,7 +190,8 @@
 .wpallexport-plugin .wpallexport-reviews-export-notice,
 .wpallexport-plugin .wpallexport-comments-export-notice,
 .wpallexport-plugin .wpallexport-taxonomies-export-notice,
-.wpallexport-plugin .wpallexport-product-export-notice {
+.wpallexport-plugin .wpallexport-product-export-notice,
+.wpallexport-plugin .wpallexport-custom-product-export-notice{
 	padding: 20px;
 	display: none;
 	width: 558px;
@@ -3499,7 +3500,7 @@ a.wpallexport-import-to-format span.wpallexport-import-to-title {
 	border-spacing:0;
 }
 .product_variations {
-	display: none;
+	display: block;
 }
 
 .wpallexport-plugin .product_variations input {

@@ -1,3 +1,5 @@
+<?php
+if(XmlExportEngine::get_addons_service()->isWooCommerceAddonActive()) { ?>
 <script type="text/javascript">
     (function ($) {
         $(function () {
@@ -37,6 +39,6 @@
         });
     })(jQuery);
 </script>
-
+<?php } ?>
 <input type="hidden" id="export_variations" name="export_variations" value="<?php echo XmlExportEngine::getProductVariationMode();?>" />
 <input type="hidden" id="export_variations_title" name="export_variations_title" value="<?php echo XmlExportEngine::getProductVariationTitleMode();?>" />

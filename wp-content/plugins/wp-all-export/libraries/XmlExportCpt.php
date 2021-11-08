@@ -8,7 +8,7 @@ final class XmlExportCpt
     private static $userData = array();
 
     public static function prepare_data($entry, $exportOptions,
-                                        $xmlWriter = false, &$acfs, &$woo, &$woo_order, $implode_delimiter, $preview, $is_item_data = false, $subID = false)
+                                        $xmlWriter, &$acfs, &$woo, &$woo_order, $implode_delimiter, $preview, $is_item_data = false, $subID = false)
     {
         $variationOptionsFactory = new  VariationOptionsFactory();
         $variationOptions = $variationOptionsFactory->createVariationOptions(PMXE_EDITION);
@@ -18,6 +18,7 @@ final class XmlExportCpt
 
         // associate exported post with import
         if (!$is_item_data and wp_all_export_is_compatible() && isset($exportOptions['is_generate_import']) && isset($exportOptions['import_id'])) {
+
             $postRecord = new PMXI_Post_Record();
             $postRecord->clear();
             $postRecord->getBy(array(
@@ -358,11 +359,11 @@ final class XmlExportCpt
                     case 'woo':
 
                         if ($is_xml_export) {
-                            if (XmlExportEngine::get_addons_service()->isWooCommerceAddonActive()) {
+                            if (XmlExportEngine::get_addons_service()->isWooCommerceAddonActive() || XmlExportEngine::get_addons_service()->isWooCommerceProductAddonActive()) {
                                 XmlExportEngine::$woo_export->export_xml($xmlWriter, $entry, $exportOptions, $ID);
                             }
                         } else {
-                            if (XmlExportEngine::get_addons_service()->isWooCommerceAddonActive()) {
+                            if (XmlExportEngine::get_addons_service()->isWooCommerceAddonActive() || XmlExportEngine::get_addons_service()->isWooCommerceProductAddonActive()) {
                                 XmlExportEngine::$woo_export->export_csv($article, $woo, $entry, $exportOptions, $ID);
                             }
                         }
@@ -372,11 +373,11 @@ final class XmlExportCpt
                     case 'woo_order':
 
                         if ($is_xml_export) {
-                            if (XmlExportEngine::get_addons_service()->isWooCommerceAddonActive()) {
+                            if (XmlExportEngine::get_addons_service()->isWooCommerceAddonActive() || XmlExportEngine::get_addons_service()->isWooCommerceOrderAddonActive()) {
                                 XmlExportEngine::$woo_order_export->export_xml($xmlWriter, $entry, $exportOptions, $ID, $preview);
                             }
                         } else {
-                            if (XmlExportEngine::get_addons_service()->isWooCommerceAddonActive()) {
+                            if (XmlExportEngine::get_addons_service()->isWooCommerceAddonActive() || XmlExportEngine::get_addons_service()->isWooCommerceOrderAddonActive()) {
                                 XmlExportEngine::$woo_order_export->export_csv($article, $woo_order, $entry, $exportOptions, $ID, $preview);
                             }
                         }

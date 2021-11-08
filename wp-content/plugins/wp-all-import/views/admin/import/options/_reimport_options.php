@@ -70,6 +70,20 @@
 	<a href="#help" class="wpallimport-help" style="position: relative; top: -2px;" title="<?php printf(__('These options will only be used if you run this import again later. All data is imported the first time you run an import.<br/><br/>Note that WP All Import will only update/remove %s created by this import. If you want to match to %s that already exist on this site, use Existing Items in Step 1.', 'wp_all_import_plugin'), $cpt_name, $cpt_name) ?>">?</a>
 	<?php endif; ?>
 	<div class="switcher-target-is_not_keep_former_posts" style="padding-left:17px;">
+
+        <div class="input" style="margin-left: 4px;">
+            <input type="hidden" name="is_selective_hashing" value="0" />
+            <input type="checkbox" id="is_selective_hashing" name="is_selective_hashing" value="1" <?php echo $post['is_selective_hashing'] ? 'checked="checked"': '' ?> class="switcher"/>
+            <label for="is_selective_hashing"><?php printf(__('Skip %s if their data in your file has not changed', 'wp_all_import_plugin'), strtolower($custom_type->labels->name)); ?></label>
+            <a href="#help" class="wpallimport-help" style="position: relative; top: -2px;" title="<?php _e('When enabled, WP All Import will keep track of every post\'s data as it is imported. When the import is run again, posts will be skipped if their data in the import file has not changed since the last run.<br/><br/>Posts will not be skipped if the import template or settings change, or if you make changes to the custom code in the Function Editor.', 'wp_all_import_plugin') ?>">?</a>
+            <div class="switcher-target-is_selective_hashing" style="padding-left:17px;">
+                <div class="wpallimport-free-edition-notice" style="margin: 20px 0;">
+                    <a href="https://www.wpallimport.com/checkout/?edd_action=add_to_cart&amp;download_id=2707176&amp;edd_options%5Bprice_id%5D=1&amp;utm_source=import-plugin-free&amp;utm_medium=upgrade-notice&amp;utm_campaign=download-from-url" target="_blank" class="upgrade_link"><?php _e('Upgrade to the Pro edition of WP All Import to use this option', 'wp_all_import_plugin'); ?></a>
+                    <p style="margin-top:16px;"><?php _e('If you already own it, remove the free edition and install the Pro edition.', 'wp_all_import_plugin'); ?></p>
+                </div>
+            </div>
+        </div>
+
 		<input type="radio" id="update_all_data" class="switcher" name="update_all_data" value="yes" <?php echo 'no' != $post['update_all_data'] ? 'checked="checked"': '' ?>/>
 		<label for="update_all_data"><?php _e('Update all data', 'wp_all_import_plugin' )?></label><br>
 		

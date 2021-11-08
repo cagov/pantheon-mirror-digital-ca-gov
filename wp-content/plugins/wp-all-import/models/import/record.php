@@ -1612,7 +1612,7 @@ class PMXI_Import_Record extends PMXI_Model_Record {
                                 }
                             }
                             if ($post_to_update){
-                                $logger and call_user_func($logger, sprintf(__('Duplicate post was found for post %s with unique key `%s`...', 'wp_all_import_plugin'), $this->getRecordTitle($articleData), $unique_keys[$i]));
+                                $logger and call_user_func($logger, sprintf(__('Duplicate post was found for post %s with unique key `%s`...', 'wp_all_import_plugin'), $this->getRecordTitle($articleData), wp_all_import_clear_xss($unique_keys[$i])));
                                 break;
                             } else {
                                 $postRecord->delete();
@@ -1620,7 +1620,7 @@ class PMXI_Import_Record extends PMXI_Model_Record {
                         }
 
                         if (empty($post_to_update)) {
-                            $logger and call_user_func($logger, sprintf(__('Duplicate post wasn\'t found with unique key `%s`...', 'wp_all_import_plugin'), $unique_keys[$i]));
+                            $logger and call_user_func($logger, sprintf(__('Duplicate post wasn\'t found with unique key `%s`...', 'wp_all_import_plugin'), wp_all_import_clear_xss($unique_keys[$i])));
                         }
 																	
 					// if Manual Matching re-import option seleted
@@ -2262,6 +2262,36 @@ class PMXI_Import_Record extends PMXI_Model_Record {
 					}
 					// [/post format]
 
+					$images_uploads = apply_filters('wp_all_import_images_uploads_dir', $uploads, $articleData, $current_xml_node, $this->id, $pid);
+
+					if ( $is_images_to_update and ! empty($images_uploads) and false === $images_uploads['error'] and (empty($articleData['ID']) or $this->options['update_all_data'] == "yes" or ( $this->options['update_all_data'] == "no" and $this->options['is_update_images']))) {
+						// If images set to be updated then delete image related custom fields as well.
+						if ( $this->options['update_images_logic'] == "full_update" ) {
+							$image_custom_fields = [ '_thumbnail_id', '_product_image_gallery' ];
+							foreach ( $image_custom_fields as $image_custom_field ) {
+								switch ( $this->options['custom_type'] ) {
+									case 'import_users':
+									case 'shop_customer':
+										delete_user_meta( $pid, $image_custom_field );
+										break;
+									case 'taxonomies':
+										delete_term_meta( $pid, $image_custom_field );
+										break;
+									case 'woo_reviews':
+									case 'comments':
+										delete_comment_meta( $pid, $image_custom_field );
+										break;
+									case 'gf_entries':
+										// No actions required.
+										break;
+									default:
+										delete_post_meta( $pid, $image_custom_field );
+										break;
+								}
+							}
+						}
+					}
+
 					// [addons import]
 
 					// prepare data for import
@@ -2369,6 +2399,21 @@ class PMXI_Import_Record extends PMXI_Model_Record {
                             if ( empty($images) ) continue;
 
                             foreach ( $images as $image ){
+
+                                $image_uploads = apply_filters('wp_all_import_single_image_uploads_dir', $images_uploads, $image, $articleData, $current_xml_node, $this->id, $pid);
+
+                                if (empty($image_uploads)) {
+                                    $logger and call_user_func($logger, __('<b>ERROR</b>: Target directory is not defined', 'wp_all_import_plugin'));
+                                    continue;
+                                }
+
+                                $targetDir = $image_uploads['path'];
+                                $targetUrl = $image_uploads['url'];
+
+                                if ( ! @is_writable($targetDir) ){
+                                    $logger and call_user_func($logger, sprintf(__('<b>ERROR</b>: Target directory %s is not writable', 'wp_all_import_plugin'), $targetDir));
+                                    continue;
+                                }
 
                                 if ($source_type == 'gallery'){
                                     $image_data = $image;
@@ -2530,6 +2575,8 @@ class PMXI_Import_Record extends PMXI_Model_Record {
 						$logger and call_user_func($logger, __('<b>IMAGES:</b>', 'wp_all_import_plugin'));
 					}
 
+
+
 					if ( $is_images_to_update and ! empty($images_uploads) and false === $images_uploads['error'] and ( ! empty($articleData['post_type']) and in_array($articleData['post_type'], ["product", "product_variation"]) and class_exists('PMWI_Plugin') or $is_allow_import_images) and (empty($articleData['ID']) or $this->options['update_all_data'] == "yes" or ( $this->options['update_all_data'] == "no" and $this->options['is_update_images'])) ) {
 
 					    if ( ! empty($images_bundle) ){
@@ -2649,7 +2696,22 @@ class PMXI_Import_Record extends PMXI_Model_Record {
 
 											$is_keep_existing_images = ( ! empty($articleData['ID']) and $this->options['is_update_images'] and $this->options['update_images_logic'] == "add_new" and $this->options['update_all_data'] == "no" and $is_show_add_new_images);						
 
-											foreach ($imgs as $k => $img_url) { 
+											foreach ($imgs as $k => $img_url) {
+
+                                                $image_uploads = apply_filters('wp_all_import_single_image_uploads_dir', $images_uploads, $img_url, $articleData, $current_xml_node, $this->id, $pid);
+
+                                                if (empty($image_uploads)) {
+                                                    $logger and call_user_func($logger, __('<b>ERROR</b>: Target directory is not defined', 'wp_all_import_plugin'));
+                                                    continue;
+                                                }
+
+                                                $targetDir = $image_uploads['path'];
+                                                $targetUrl = $image_uploads['url'];
+
+                                                if ( ! @is_writable($targetDir) ){
+                                                    $logger and call_user_func($logger, sprintf(__('<b>ERROR</b>: Target directory %s is not writable', 'wp_all_import_plugin'), $targetDir));
+                                                    continue;
+                                                }
 
 												$attid = false;		
 
@@ -3085,13 +3147,32 @@ class PMXI_Import_Record extends PMXI_Model_Record {
 
                             $logger and call_user_func($logger, sprintf(__('- Importing attachments for `%s` ...', 'wp_all_import_plugin'), $this->getRecordTitle($articleData)));
 
-                            foreach ($attachments[$i] as $attachment) { if ("" == $attachment) continue;
+                            foreach ($attachments[$i] as $attachment) {
+
+                                if ("" == $attachment) continue;
 
                                 $atchs = str_getcsv($attachment, $this->options['atch_delim']);
 
                                 if ( ! empty($atchs) ) {
 
-                                    foreach ($atchs as $atch_url) {	if (empty($atch_url)) continue;
+                                    foreach ($atchs as $atch_url) {
+
+                                        if (empty($atch_url)) continue;
+
+                                        $attachments_uploads = apply_filters('wp_all_import_single_attachment_uploads_dir', $attachments_uploads, $atch_url, $articleData, $current_xml_node, $this->id);
+
+                                        if (empty($attachments_uploads)) {
+                                            $logger and call_user_func($logger, __('- <b>ERROR</b>: Target directory is not defined', 'wp_all_import_plugin'));
+                                            continue;
+                                        }
+
+                                        $targetDir = $attachments_uploads['path'];
+                                        $targetUrl = $attachments_uploads['url'];
+
+                                        if ( ! @is_writable($targetDir) ){
+                                            $logger and call_user_func($logger, sprintf(__('- <b>ERROR</b>: Target directory %s is not writable', 'wp_all_import_plugin'), trim($targetDir)));
+                                            continue;
+                                        }
 
                                         $download_file = true;
                                         $create_file = false;
@@ -3499,7 +3580,7 @@ class PMXI_Import_Record extends PMXI_Model_Record {
                 $title = $articleData['post_title'];
                 break;
         }
-        return $title;
+        return wp_all_import_clear_xss($title);
     }
 
     public function downloadFile($url, $image_filepath, $is_cron = false, $logger, $type = 'images'){

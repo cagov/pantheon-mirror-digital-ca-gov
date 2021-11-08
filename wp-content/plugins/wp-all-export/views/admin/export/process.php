@@ -36,7 +36,7 @@
                 </div>
             </div>
             <?php
-            if (XmlExportEngine::get_addons_service()->isWooCommerceAddonActive() && XmlExportWooCommerceOrder::$is_active && $update_previous->options['export_type'] == 'specific') {
+            if ((XmlExportEngine::get_addons_service()->isWooCommerceAddonActive() || XmlExportEngine::get_addons_service()->isWooCommerceOrderAddonActive() ) && XmlExportWooCommerceOrder::$is_active && $update_previous->options['export_type'] == 'specific') {
 
                 $exportList = new PMXE_Export_List();
                 foreach ($exportList->getBy('parent_id', $update_previous->id)->convertRecords() as $child_export) {
@@ -48,8 +48,7 @@
                         case 'shop_coupon':
                             if (!$update_previous->options['order_include_coupons']) $is_render_child_progress = false;
                             break;
-                        case 'shop_customer':
-                            if (!$update_previous->options['order_include_customers']) $is_render_child_progress = false;
+                        case 'shop_customer':if (!$update_previous->options['order_include_customers']) $is_render_child_progress = false;
                             break;
                     }
 

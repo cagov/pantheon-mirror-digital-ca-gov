@@ -208,7 +208,12 @@ $columns = apply_filters('pmxe_manage_imports_columns', $columns);
                                                 <?php
                                                 // Disable scheduling options for WooCo exports if WooCo Export Add-On isn't enabled
                                             } else if (
-                                                (( (in_array('product', $item['options']['cpt']) && in_array('product_variation', $item['options']['cpt'])) || in_array('shop_order', $item['options']['cpt']) || in_array('shop_coupon', $item['options']['cpt']) || in_array('shop_review', $item['options']['cpt']) ) && !$addons->isWooCommerceAddonActive())
+                                                (( (
+                                                        in_array('product', $item['options']['cpt']) &&
+                                                        in_array('product_variation', $item['options']['cpt']) && !$addons->isWooCommerceProductAddonActive() ) ||
+                                                        (in_array('shop_order', $item['options']['cpt']) && !$addons->isWooCommerceOrderAddonActive())  ||
+                                                        in_array('shop_coupon', $item['options']['cpt']) ||
+                                                        in_array('shop_review', $item['options']['cpt']) ) && !$addons->isWooCommerceAddonActive())
                                                 ||
                                                 ($item['options']['export_type'] == 'advanced' && in_array($item['options']['exportquery']->query['post_type'], array(array('product', 'product_variation'), 'shop_order', 'shop_coupon')) && !$addons->isWooCommerceAddonActive())
                                             ) {
@@ -379,7 +384,7 @@ $columns = apply_filters('pmxe_manage_imports_columns', $columns);
 										printf(__('Export Attempt at %s', 'wp_all_export_plugin'), get_date_from_gmt($item['canceled_on'], "m/d/Y g:i a")); echo '<br/>';
 										_e('Export canceled', 'wp_all_export_plugin');
 									}									
-									else{										
+									else {
 										printf(__('Last run: %s', 'wp_all_export_plugin'), ($item['registered_on'] == '0000-00-00 00:00:00') ? __('never', 'wp_all_export_plugin') : get_date_from_gmt($item['registered_on'], "m/d/Y g:i a")); echo '<br/>';
 										printf(__('%d Records Exported', 'wp_all_export_plugin'), $item['exported']); echo '<br/>';										
 										$export_to = ($item['options']['export_to'] == 'csv' && ! empty($item['options']['export_to_sheet'])) ? $item['options']['export_to_sheet'] : $item['options']['export_to'];									

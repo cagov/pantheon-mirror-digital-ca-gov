@@ -59,7 +59,7 @@ class PMXI_Admin_Settings extends PMXI_Controller_Admin {
 
 				PMXI_Plugin::getInstance()->updateOption($post);
 
-				if (empty($_POST['pmxi_license_activate']) and empty($_POST['pmxi_license_deactivate'])) {
+				if (!empty($this->data['addons']) && empty($_POST['pmxi_license_activate']) and empty($_POST['pmxi_license_deactivate'])) {
 					foreach ($this->data['addons'] as $class => $addon) {
 						$post['statuses'][$class] = $this->check_license($class);
 					}					

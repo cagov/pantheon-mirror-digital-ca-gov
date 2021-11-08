@@ -2,7 +2,7 @@
 Contributors: soflyy, wpallimport
 Requires at least: 5.0
 Tested up to: 5.8
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 Tags: export, wordpress csv export, wordpress xml export, export woocommerce, migrate, export csv from wordpress, export xml from wordpress, advanced xml export, advanced csv export, export data, bulk csv export, export custom post type, export woocommerce products, export woocommerce orders, migrate woocommerce, csv export, export csv, xml export, export xml, csv exporter, datafeed
 
 Easily export any data from WordPress. Drag & drop to create a completely custom spreadsheet, CSV, or XML file.
@@ -91,7 +91,13 @@ Either: -
 
 == Changelog ==
 
-= 1.3.1 = 
+= 1.3.2 =
+* improvement: add support for exporting non-WooCommerce 'product' CPTs
+* improvement: initial PHP 8 support
+* improvement: only set max_execution_time on WPAE pages
+* bug fix
+
+= 1.3.1 =
 * improvement: only set max_execution_time on export pages
 * bugfix: error when using the ACF Export Add-On Pro
 
