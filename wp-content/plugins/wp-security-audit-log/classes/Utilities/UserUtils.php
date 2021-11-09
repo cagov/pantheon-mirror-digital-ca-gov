@@ -70,4 +70,31 @@ class WSAL_Utilities_UsersUtils {
 
 		return '';
 	}
+<<<<<<< HEAD
+=======
+
+	/**
+	 * Get the user details for the tooltip.
+	 *
+	 * @param WP_User $user - User data.
+	 *
+	 * @return string HTML representing a tooltip with user's details.
+	 *
+	 * @since latest.
+	 */
+	public static function get_tooltip_user_content( $user ) {
+
+		if ( ! isset( $user->ID ) ) {
+			return '';
+		}
+
+		$tooltip = '<strong>' . esc_attr__( 'Username: ', 'wp-security-audit-log' ) . '</strong>' . $user->data->user_login . '</br>';
+		$tooltip .= ( ! empty( $user->data->first_name ) ) ? '<strong>' . esc_attr__( 'First name: ', 'wp-security-audit-log' ) . '</strong>' . $user->data->first_name . '</br>' : '';
+		$tooltip .= ( ! empty( $user->data->first_name ) ) ? '<strong>' . esc_attr__( 'Last Name: ', 'wp-security-audit-log' ) . '</strong>' . $user->data->first_name . '</br>' : '';
+		$tooltip .= '<strong>' . esc_attr__( 'Email: ', 'wp-security-audit-log' ) . '</strong>' . $user->data->user_email . '</br>';
+		$tooltip .= '<strong>' . esc_attr__( 'Nickname: ', 'wp-security-audit-log' ) . '</strong>' . $user->data->user_nicename . '</br></br>';
+
+		return $tooltip;
+	}
+>>>>>>> 45d1e91c134bbf440796a5c155bd20543b46d4eb
 }

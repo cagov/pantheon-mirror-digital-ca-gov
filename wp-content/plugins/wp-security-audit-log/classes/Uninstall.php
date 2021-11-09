@@ -86,6 +86,12 @@ class WSAL_Uninstall {
 
 		// Remove wsal specific freemius entry.
 		delete_option( 'fs_wsalp' );
+<<<<<<< HEAD
+=======
+		
+		// Ensue entry is fully cleared.
+		delete_network_option( 0 ,'wsal_networkwide_tracker_cpts' );
+>>>>>>> 45d1e91c134bbf440796a5c155bd20543b46d4eb
 
 		//  @todo delete also options from site-level tables in multisite context
 	}

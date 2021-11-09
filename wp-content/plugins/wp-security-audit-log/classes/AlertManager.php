@@ -636,6 +636,15 @@ final class WSAL_AlertManager {
 			$event_data['EventType'] = $alert_obj->event_type;
 		}
 
+<<<<<<< HEAD
+=======
+		// Append further details if in multisite.
+		if ( $this->plugin->IsMultisite() ) {
+			$event_data['SiteID']  = get_current_blog_id();
+			$event_data['SiteURL'] = get_site_url( $event_data['SiteID'] );
+		}
+
+>>>>>>> 45d1e91c134bbf440796a5c155bd20543b46d4eb
 		/**
 		 * WSAL Filter: `wsal_event_id_before_log`
 		 *

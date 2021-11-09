@@ -418,13 +418,26 @@ class WSAL_AuditLogListView extends WP_List_Table {
 				$image    = '<span class="dashicons dashicons-wordpress wsal-system-icon"></span>';
 
 				//  check if there's a user with given username
+<<<<<<< HEAD
 				if ( $user instanceof WP_User) {
+=======
+				if ( $user instanceof WP_User ) {
+>>>>>>> 45d1e91c134bbf440796a5c155bd20543b46d4eb
 					// Get user avatar.
 					$image = get_avatar( $user->ID, 32 );
 
 					$display_name = WSAL_Utilities_UsersUtils::get_display_label( $this->_plugin, $user );
 					$user_edit_link = admin_url( 'user-edit.php?user_id=' . $user->ID );
+<<<<<<< HEAD
 					$uhtml = '<a href="' . $user_edit_link . '" target="_blank">' . esc_html( $display_name ) . '</a>';
+=======
+
+					// Additional user info tooltip.
+					$tooltip = WSAL_Utilities_UsersUtils::get_tooltip_user_content( $user );
+
+					$uhtml = '<a class="tooltip" data-tooltip="' . esc_attr( $tooltip ) . '" data-user="' . $user->user_login . '" href="' . $user_edit_link . '" target="_blank">' . esc_html( $display_name ) . '</a>';
+
+>>>>>>> 45d1e91c134bbf440796a5c155bd20543b46d4eb
 
 					$roles = $item->GetUserRoles( $this->item_meta[ $item->getId() ] );
 					if ( is_array( $roles ) && count( $roles ) ) {

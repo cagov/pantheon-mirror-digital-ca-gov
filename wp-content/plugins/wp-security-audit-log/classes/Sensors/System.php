@@ -130,6 +130,34 @@ class WSAL_Sensors_System extends WSAL_AbstractSensor {
 			$actype = basename( $server_array['SCRIPT_NAME'], '.php' );
 		}
 
+<<<<<<< HEAD
+=======
+		if ( isset( $post_array['action'] ) && 'toggle-auto-updates' == $post_array['action']  ) {
+			$event_id = ( 'theme' == $post_array['type'] ) ? 5029 : 5028;
+
+			if ( 'theme' == $post_array['type'] ) {
+				$all_themes       = wp_get_themes();
+				$our_theme        = $all_themes[$post_array['asset']];
+				$install_location = $our_theme->get_template_directory();
+				$name             = $our_theme->Name;
+			} else if ( 'plugin' == $post_array['type'] ) {
+				$all_plugins      = get_plugins();
+				$our_plugin       = $all_plugins[$post_array['asset']];
+				$install_location = plugin_dir_path( WP_PLUGIN_DIR . '/' . $post_array['asset'] );
+				$name             = $our_plugin['Name'];
+			}
+
+			$this->plugin->alerts->Trigger(
+				$event_id,
+				array(
+					'install_directory' => $install_location,
+					'name'              => $name,
+					'EventType'         => ( 'enable' == $post_array['state'] ) ? 'enabled' : 'disabled',
+				)
+			);
+		}
+
+>>>>>>> 45d1e91c134bbf440796a5c155bd20543b46d4eb
 		$is_option_page      = 'options' === $actype;
 		$is_network_settings = 'settings' === $actype;
 		$is_permalink_page   = 'options-permalink' === $actype;

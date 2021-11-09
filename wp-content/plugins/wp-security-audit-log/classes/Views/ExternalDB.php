@@ -32,7 +32,11 @@ class WSAL_Views_ExternalDB extends WSAL_ExtensionPlaceholderView {
 	 * Method: Get View Name.
 	 */
 	public function GetName() {
+<<<<<<< HEAD
 		return __( 'DB & Integrations &#8682;', 'wp-security-audit-log' );
+=======
+		return __( 'Integrations &#8682;', 'wp-security-audit-log' );
+>>>>>>> 45d1e91c134bbf440796a5c155bd20543b46d4eb
 	}
 
 	/**
