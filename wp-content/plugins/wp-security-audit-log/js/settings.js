@@ -250,8 +250,6 @@ jQuery( document ).ready( function() {
 	});
 
 });
-<<<<<<< HEAD
-=======
 
 jQuery( document ).ready( function() {
 
@@ -279,4 +277,3 @@ jQuery( document ).ready( function() {
 	    minLength: 1
 	});	  
  });
->>>>>>> 45d1e91c134bbf440796a5c155bd20543b46d4eb

@@ -101,13 +101,8 @@ class WSAL_Sensors_Content extends WSAL_AbstractSensor {
 		add_action( 'pre_delete_term', array( $this, 'check_taxonomy_term_deletion' ), 10, 2 );
 		add_filter( 'wp_update_term_data', array( $this, 'event_update_term_data' ), 10, 4 );
 		add_filter( 'add_post_metadata', array( $this, 'check_changed_meta' ), 10, 4 );
-<<<<<<< HEAD
-		add_filter( 'delete_post_metadata', array( $this, 'check_changed_meta' ), 10, 4 );
-		add_filter( 'updated_post_meta', array( $this, 'check_changed_meta' ), 10, 4 );
-=======
 		add_filter( 'updated_post_meta', array( $this, 'check_changed_meta' ), 10, 4 );
 		add_filter( 'delete_post_metadata', array( $this, 'check_deleted_meta' ), 10, 5 );
->>>>>>> 45d1e91c134bbf440796a5c155bd20543b46d4eb
 
 
 		// Check if MainWP Child Plugin exists.
@@ -467,14 +462,11 @@ class WSAL_Sensors_Content extends WSAL_AbstractSensor {
 					$current_path = preg_replace( '/' . $escaped . '/', '', $current_path );
 				}
 
-<<<<<<< HEAD
-=======
 				// Bail if this dont have this, as its probably an archive.
 				if ( ! isset( $post_data['PostUrl'] ) ) {
 					return;
 				}
 
->>>>>>> 45d1e91c134bbf440796a5c155bd20543b46d4eb
 				$full_current_path = home_url( $current_path );
 				if ( $full_current_path !== $post_data['PostUrl'] ) {
 					$post_data['PostUrl'] = esc_url( $full_current_path );
@@ -681,19 +673,12 @@ class WSAL_Sensors_Content extends WSAL_AbstractSensor {
 	 * @param int    $post_id    Post ID.
 	 * @param string $meta_key   Meta key.
 	 * @param mixed  $meta_value Meta value.
-<<<<<<< HEAD
-	 */
-	public function check_changed_meta( $meta_id, $post_id, $meta_key, $meta_value ) {
-		if ( ! $post_id ) {
-			return;
-=======
 	 * 
 	 * @return int $meta_id      ID of updated metadata entry.
 	 */
 	public function check_changed_meta( $meta_id, $post_id, $meta_key, $meta_value ) {
 		if ( ! $post_id ) {
 			return $meta_id;
->>>>>>> 45d1e91c134bbf440796a5c155bd20543b46d4eb
 		}
 
 		switch ( $meta_key ) {
@@ -704,10 +689,6 @@ class WSAL_Sensors_Content extends WSAL_AbstractSensor {
 				$this->check_featured_image_change( $post_id, $meta_value );
 				break;
 			default:
-<<<<<<< HEAD
-				// no other meta keys supported here.
-		}
-=======
 				return $meta_id;
 		}
 
@@ -741,7 +722,6 @@ class WSAL_Sensors_Content extends WSAL_AbstractSensor {
 			// no other meta keys supported here.
 		} 
 		return $delete; 
->>>>>>> 45d1e91c134bbf440796a5c155bd20543b46d4eb
 	}
 
 	/**

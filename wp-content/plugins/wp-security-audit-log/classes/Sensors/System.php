@@ -130,8 +130,6 @@ class WSAL_Sensors_System extends WSAL_AbstractSensor {
 			$actype = basename( $server_array['SCRIPT_NAME'], '.php' );
 		}
 
-<<<<<<< HEAD
-=======
 		if ( isset( $post_array['action'] ) && 'toggle-auto-updates' == $post_array['action']  ) {
 			$event_id = ( 'theme' == $post_array['type'] ) ? 5029 : 5028;
 
@@ -157,7 +155,6 @@ class WSAL_Sensors_System extends WSAL_AbstractSensor {
 			);
 		}
 
->>>>>>> 45d1e91c134bbf440796a5c155bd20543b46d4eb
 		$is_option_page      = 'options' === $actype;
 		$is_network_settings = 'settings' === $actype;
 		$is_permalink_page   = 'options-permalink' === $actype;

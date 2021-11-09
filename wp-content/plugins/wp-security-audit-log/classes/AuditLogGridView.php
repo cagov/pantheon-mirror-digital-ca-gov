@@ -413,29 +413,6 @@ class WSAL_AuditLogGridView extends WP_List_Table {
 				// Check if the username and user exists.
 				if ( $username && $user ) {
 
-<<<<<<< HEAD
-					// Checks for display name.
-					if ( 'display_name' === $this->name_type && ! empty( $user->display_name ) ) {
-						$display_name = $user->display_name;
-					} elseif (
-						'first_last_name' === $this->name_type
-						&& ( ! empty( $user->first_name ) || ! empty( $user->last_name ) )
-					) {
-						$display_name = $user->first_name . ' ' . $user->last_name;
-					} else {
-						$display_name = $user->user_login;
-					}
-
-					if ( class_exists( 'WSAL_SearchExtension' ) ) {
-						$tooltip = esc_attr__( 'Show me all activity by this User', 'wp-security-audit-log' );
-
-						$uhtml = '<a class="search-user" data-tooltip="' . $tooltip . '" data-user="' . $user->user_login . '" href="' . admin_url( 'user-edit.php?user_id=' . $user->ID )
-							. '" target="_blank">' . esc_html( $display_name ) . '</a>';
-					} else {
-						$uhtml = '<a href="' . admin_url( 'user-edit.php?user_id=' . $user->ID )
-						. '" target="_blank">' . esc_html( $display_name ) . '</a>';
-					}
-=======
 					$display_name = WSAL_Utilities_UsersUtils::get_display_label( $this->_plugin, $user );
 					$user_edit_link = admin_url( 'user-edit.php?user_id=' . $user->ID );
 					
@@ -444,7 +421,6 @@ class WSAL_AuditLogGridView extends WP_List_Table {
 
 					$uhtml = '<a class="tooltip" data-tooltip="' . esc_attr( $tooltip ) . '" data-user="' . $user->user_login . '" href="' . $user_edit_link . '" target="_blank">' . esc_html( $display_name ) . '</a>';
 
->>>>>>> 45d1e91c134bbf440796a5c155bd20543b46d4eb
 
 					$roles = $item->GetUserRoles( $this->item_meta[ $item->getId() ] );
 					if ( is_array( $roles ) && count( $roles ) ) {

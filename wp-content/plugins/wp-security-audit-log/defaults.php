@@ -117,13 +117,10 @@ function wsaldefaults_build_links( $link_aliases = [] ) {
 					$result[ __( 'URL', 'wp-security-audit-log' ) ] = '%PostUrl%';
 					break;
 
-<<<<<<< HEAD
-=======
 				case 'AttachmentUrl':
 					$result[ __( 'View attachment page', 'wp-security-audit-log' ) ] = '%AttachmentUrl%';
 					break;
 
->>>>>>> 45d1e91c134bbf440796a5c155bd20543b46d4eb
 				case 'PostUrlIfPlublished':
 				case 'PostUrlIfPublished':
 					$result[ __( 'URL', 'wp-security-audit-log' ) ] = '%PostUrlIfPlublished%';
@@ -292,8 +289,6 @@ function wsaldefaults_wsal_init() {
 						'login'
 					),
 					array(
-<<<<<<< HEAD
-=======
 						1009,
 						WSAL_LOW,
 						__( 'The plugin terminated an idle session for a user', 'wp-security-audit-log' ),
@@ -307,7 +302,6 @@ function wsaldefaults_wsal_init() {
 						'logout'
 					),
 					array(
->>>>>>> 45d1e91c134bbf440796a5c155bd20543b46d4eb
 						2010,
 						WSAL_MEDIUM,
 						__( 'User uploaded file to the Uploads directory', 'wp-security-audit-log' ),
@@ -315,11 +309,7 @@ function wsaldefaults_wsal_init() {
 						[
 							__( 'Directory', 'wp-security-audit-log' ) => '%FilePath%'
 						],
-<<<<<<< HEAD
-						[],
-=======
 						wsaldefaults_build_links( [ 'AttachmentUrl' ] ),
->>>>>>> 45d1e91c134bbf440796a5c155bd20543b46d4eb
 						'file',
 						'uploaded'
 					),
@@ -2166,8 +2156,6 @@ function wsaldefaults_wsal_init() {
 						'post',
 						'deleted'
 					),
-<<<<<<< HEAD
-=======
 
 					array(
 						5028,
@@ -2195,7 +2183,6 @@ function wsaldefaults_wsal_init() {
 						'enabled'
 					),
 					
->>>>>>> 45d1e91c134bbf440796a5c155bd20543b46d4eb
 					array(
 						2051,
 						WSAL_HIGH,
@@ -2402,8 +2389,6 @@ function wsaldefaults_wsal_init() {
 					),
 
 					array(
-<<<<<<< HEAD
-=======
 						6038,
 						WSAL_CRITICAL,
 						__( 'Deleted all the data about a user from the activity log.', 'wp-security-audit-log' ),
@@ -2429,7 +2414,6 @@ function wsaldefaults_wsal_init() {
 					),
 
 					array(
->>>>>>> 45d1e91c134bbf440796a5c155bd20543b46d4eb
 						6043,
 						WSAL_HIGH,
 						__( 'Some WP Activity Log plugin settings on this site were propagated and overridden from the MainWP dashboard', 'wp-security-audit-log' ),
@@ -2697,11 +2681,7 @@ function wsaldefaults_wsal_init() {
 						6320,
 						WSAL_HIGH,
 						__( 'Added a new integrations connection', 'wp-security-audit-log' ),
-<<<<<<< HEAD
-						__( 'Added a new integrations connection %name%', 'wp-security-audit-log' ),
-=======
 						__( 'Added / removed the integrations connection %name%', 'wp-security-audit-log' ),
->>>>>>> 45d1e91c134bbf440796a5c155bd20543b46d4eb
 						[
 							__( 'Connection type', 'wp-security-audit-log' ) => '%type%',
 						],

@@ -70,8 +70,6 @@ class WSAL_Utilities_UsersUtils {
 
 		return '';
 	}
-<<<<<<< HEAD
-=======
 
 	/**
 	 * Get the user details for the tooltip.
@@ -96,5 +94,4 @@ class WSAL_Utilities_UsersUtils {
 
 		return $tooltip;
 	}
->>>>>>> 45d1e91c134bbf440796a5c155bd20543b46d4eb
 }
