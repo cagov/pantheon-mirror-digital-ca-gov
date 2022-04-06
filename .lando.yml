@@ -1,0 +1,6 @@
+name: digital-ca-gov
+recipe: pantheon
+config:
+  framework: wordpress
+  site: digital-ca-gov
+  id: e901164e-02d0-4f2c-8e4a-3c22ebf99c0f
