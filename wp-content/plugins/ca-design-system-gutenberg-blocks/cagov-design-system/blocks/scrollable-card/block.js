@@ -7,7 +7,7 @@
   const el = element.createElement;
   const InnerBlocks = blockEditor.InnerBlocks;
   const ALLOWED_BLOCKS = ["ca-design-system/scrollable-card"];
-  blocks.registerBlockType("ca-design-system/scrollable-card-grid", {
+  blocks.registerBlockType("ca-design-system/scrollable-button-grid", {
     title: "Scrollable card grid",
     icon: "format-aside",
     category: "ca-design-system",
@@ -16,7 +16,7 @@
       return el(
           "div",
           {
-            className: "cagov-grid cagov-block cagov-scrollable-card-grid",
+            className: "cagov-grid cagov-block cagov-scrollable-button-grid",
           },
         el(InnerBlocks, {
           orientation: "horizontal",
@@ -35,7 +35,7 @@
           el(
             "div",
             {
-              className: "glider cagov-grid cagov-block cagov-scrollable-card-grid",
+              className: "glider cagov-grid cagov-block cagov-scrollable-button-grid",
             },
             el(InnerBlocks.Content),
           ),

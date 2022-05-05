@@ -1,2 +1,3 @@
-# Accordion
-An expandable section of content. Can be used on any standard content page. Allows information that is not applicable to the majority of readers to be initially hidden, and opened on demand. Includes accordion label, button, and body content. The label can be a question or a title.
+# Accordion custom Gutenberg block
+
+The accordion custom Gutenberg block depends on the <a href="https://designsystem.webstandards.ca.gov/components/accordion/readme/">CA design system accordion package</a>. The block provides the WordPress editor interface to add an accordion component using the WordPress visual editor and applies the appropriate markup to the source.

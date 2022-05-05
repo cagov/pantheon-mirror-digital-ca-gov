@@ -10,11 +10,14 @@
         name: 'step-list',
         title: 'Step list',
         attributes: {
-          className: 'step-list'
+          className: 'step-list cagov-step-list'
         },
         icon: "format-aside",
         category: 'ca-design-system',
-        description: "List styling for a process list.", 
+        description: "List styling for a process list. Use ordered lists (ol).", 
+        onChange: function (value) {
+          // console.log(value);
+        }
     }
     ]
   );

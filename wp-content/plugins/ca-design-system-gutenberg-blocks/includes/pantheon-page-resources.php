@@ -24,17 +24,6 @@ function cagov_init()
 	foreach (glob(__DIR__ . '/includes/*.php') as $file) {
 		require_once $file;
 	}
-
-	/* Add content menu navigation */
-	register_nav_menu('content-menu', 'Content Footer Menu');
-	register_nav_menu('social-media-links', 'Social Media Links');
-	register_nav_menu('statewide-footer-menu', 'Statewide Footer Menu');
 }
 
-function cagov_footer_scripts() {
-	/* Register cagov scripts */
-	wp_register_script( 'twitter-timeline', 'https://platform.twitter.com/widgets.js', array(), CAGOV_DESIGN_SYSTEM_HEADLESS_WORDPRESS__VERSION, false );
-
-	wp_enqueue_script( 'twitter-timeline' );
-}
 

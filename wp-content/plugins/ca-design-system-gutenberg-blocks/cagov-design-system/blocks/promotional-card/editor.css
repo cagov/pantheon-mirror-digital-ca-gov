@@ -1,12 +1,12 @@
 /* Gutenberg interface overrides */
 /* Grid */
-.cagov-promotional-card-grid.cagov-grid .block-editor-block-list__layout {
+.cagov-promotional-button-grid.cagov-grid .block-editor-block-list__layout {
     display: grid;
     grid-gap: 1.5rem;
     grid-row-gap: 64px;
 }
 
-.cagov-promotional-card-grid .block-editor-rich-text__editable .rich-text {
+.cagov-promotional-button-grid .block-editor-rich-text__editable .rich-text {
     margin-top: 16px;
 }
 

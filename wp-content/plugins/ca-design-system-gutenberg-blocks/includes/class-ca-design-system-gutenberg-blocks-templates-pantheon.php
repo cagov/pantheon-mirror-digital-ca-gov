@@ -51,8 +51,8 @@ class CADesignSystemGutenbergBlocks_Plugin_Templates_Loader_Pantheon
     {
         $this->template_dir = plugin_dir_path(__FILE__) . 'templates-pantheon/';
 
-        add_filter('theme_page_templates', array($this, 'register_plugin_templates_page'));
-        add_filter('theme_post_templates', array($this, 'register_plugin_templates_post'));
+        // add_filter('theme_page_templates', array($this, 'register_plugin_templates_page'));
+        add_filter('theme_post_templates', array($this, 'register_plugin_templates_post')); // Still using, will move later
         add_filter('template_include', array($this, 'add_template_filter'));
     }
 

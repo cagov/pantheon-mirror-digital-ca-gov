@@ -72,7 +72,7 @@
         body: __('Registration opens November 5, 2022', 'cagov-design-system'),
         buttontext: __('Register', 'cagov-design-system'),
         buttonurl: __('https://example.com', 'cagov-design-system'),
-        mediaURL: 'http://www.fillmurray.com/720/240',
+        mediaURL: 'http://www.fillmurray.com/750/500',
         mediaAlt: 'Image Description',
         mediaWidth: "750",
         mediaHeight: "500",

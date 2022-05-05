@@ -7,7 +7,7 @@
   const el = element.createElement;
   const InnerBlocks = blockEditor.InnerBlocks;
   const ALLOWED_BLOCKS = ['ca-design-system/promotional-card'];
-  blocks.registerBlockType('ca-design-system/promotional-card-grid', {
+  blocks.registerBlockType('ca-design-system/promotional-button-grid', {
     title: 'Promotional card grid',
     icon: "format-aside",
     category: 'ca-design-system',
@@ -16,7 +16,7 @@
       return el(
         'div',
         { 
-          className: 'cagov-grid cagov-promotional-card-grid cagov-stack cagov-block',
+          className: 'cagov-grid cagov-promotional-button-grid cagov-stack cagov-block',
         },
         el(InnerBlocks,
           {
