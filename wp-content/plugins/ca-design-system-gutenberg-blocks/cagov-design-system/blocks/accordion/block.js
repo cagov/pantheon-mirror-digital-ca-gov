@@ -1,11 +1,17 @@
 /**
  * CAGov Accordion
- * web component compiled from node_modules
  */
 (function (blocks, editor, i18n, element, components, _) {
   var __ = i18n.__;
   var el = element.createElement;
   var RichText = editor.RichText;
+
+  let newScript = document.createElement("script");
+  newScript.type="module";
+  newScript.src = "https://files.covid19.ca.gov/js/components/accordion/v1/index.js";
+  newScript.defer = true;
+  document.querySelector('head').appendChild(newScript);
+
 
   blocks.registerBlockType(
     "ca-design-system/accordion",
@@ -24,7 +30,7 @@
         body: {
           type: 'array',
           source: 'children',
-          selector: '.accordion-body'
+          selector: '.card-body'
         }
       },
       example: {
@@ -34,19 +40,17 @@
         }
       },
       edit: function (props) {
+
+
+
         const attributes = props.attributes;
-        /*
-        <details>
-          <summary>$title</summary>
-          <div class="accordion-body">$content</div>
-        </details>
-        */
         return el('cagov-accordion', { },
-          el('details', { }, 
-            el('summary', { },
+          el('div', { className: 'cagov-accordion-card' },
+            el('button', { className: 'accordion-card-header accordion-alpha', type: 'button', 'aria-expanded': "true" },
               el(RichText, {
                 tagName: 'div',
                 inline: true,
+                classname: 'accordion-title',
                 placeholder: __(
                   'Write accordion title…',
                   'cagov-design-system'
@@ -56,29 +60,31 @@
                   props.setAttributes({ title: value });
                 }
               }),
+              el('div', { className: 'plus-minus' },
+                el('cagov-plus', {}),
+                el('cagov-minus', {}),
+              )
+            ),
+            el('div', { className: 'accordion-card-container' },
               el(
                 'div',
-                { className: 'cagov-open-indicator', 'aria-hidden': "true" }
-              )
-            ),            
-            el(
-              'div',
-              { className: 'accordion-body' },
-              el(editor.InnerBlocks,
-                {
-                  allowedBlocks: ['core/heading', 'core/paragraph', 'core/button', 'core/list'],
-                  onChange: function (value) {
-                    // console.log(value);
+                { className: 'card-body' },
+                el(editor.InnerBlocks,
+                  {
+                    allowedBlocks: ['core/heading', 'core/paragraph', 'core/button', 'core/list'],
+                    onChange: function (value) {
+                      // console.log(value);
+                    }
                   }
-                }
+                )
               )
-            )
+            ),
           )
         );
       },
       save: function (props) {
         const attributes = props.attributes;
-        return el(editor.InnerBlocks.Content);
+        return el(editor.InnerBlocks.Content)
       }
     }
   );
@@ -90,5 +96,3 @@
   window.wp.components,
   window._
 );
-
-
