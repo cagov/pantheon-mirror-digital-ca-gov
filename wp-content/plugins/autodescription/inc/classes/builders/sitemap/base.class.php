@@ -8,7 +8,7 @@ namespace The_SEO_Framework\Builders\Sitemap;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2019 - 2022 Sybre Waaijer, CyberWire B.V. (https://cyberwire.nl/)
+ * Copyright (C) 2019 - 2023 Sybre Waaijer, CyberWire B.V. (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -24,8 +24,6 @@ namespace The_SEO_Framework\Builders\Sitemap;
  */
 
 \defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
-
-use function \The_SEO_Framework\umemo;
 
 /**
  * Generates the base sitemap.
@@ -152,11 +150,22 @@ class Base extends Main {
 	 *              2. Improved performance by a factor of two+.
 	 *              3. Renamed method from "generate_sitemap" to abstract extension "build_sitemap".
 	 *              4. Moved to \The_SEO_Framework\Builders\Sitemap\Base
-	 * @abstract
+	 * @override
+	 * @slow The queried results are not stored in WP Post's cache, which would allow direct access
+	 *       to all values of the post (if requested). This is because we're using
+	 *       `'fields' => 'ids'` instead of `'fields' => 'all'`. However, this would fill RAM
+	 *       linearly: at 1000 posts, we'd hit 28MB already, 10 000 would be ~280MB, exceeding max.
+	 * @link <https://w.org/support/topic/sitemap-and-memory-exhaustion/#post-13331896>
 	 *
 	 * @return string The sitemap content.
 	 */
 	public function build_sitemap() {
+
+		/**
+		 * @since 4.2.7
+		 * @param \The_SEO_Framework\Builders\Sitemap\Base
+		 */
+		\do_action( 'the_seo_framework_build_sitemap_base', $this );
 
 		$content = '';
 		$count   = 0;
@@ -223,6 +232,7 @@ class Base extends Main {
 			/**
 			 * @since 4.0.0
 			 * @param array $args The query arguments.
+			 * @link <https://w.org/support/topic/sitemap-and-memory-exhaustion/#post-13331896>
 			 */
 			$_args = (array) \apply_filters(
 				'the_seo_framework_sitemap_hpt_query_args',
@@ -345,9 +355,8 @@ class Base extends Main {
 			]
 		);
 
-		if ( $extend ) {
-			$content .= "\t" . $extend . "\n";
-		}
+		if ( $extend )
+			$content .= "\t$extend\n";
 
 		return $content;
 	}

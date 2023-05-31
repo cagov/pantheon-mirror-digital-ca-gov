@@ -1,6 +1,6 @@
 {
   "name": "change-last-modified-date",
-  "version": "1.4.2",
+  "version": "1.4.4",
   "description": "Change last modified date of the post",
   "main": "block-editor/dist/index.js",
   "scripts": {
@@ -25,6 +25,6 @@
   },
   "homepage": "https://github.com/djuric/change-last-modified-date#readme",
   "devDependencies": {
-    "@wordpress/scripts": "^12.6.1"
+    "@wordpress/scripts": "^26.1.0"
   }
 }

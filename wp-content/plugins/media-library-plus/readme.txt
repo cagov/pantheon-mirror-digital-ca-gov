@@ -2,8 +2,8 @@
 Contributors: maxfoundry, AlanP57
 Tags: media library folders, media library folders, organize media library
 Requires at least: 4.0
-Tested up to: 5.9.3
-Stable tag: 7.1.0
+Tested up to: 6.1.1
+Stable tag: 8.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -184,6 +184,40 @@ Users can upload multiple files by using drag and drop. When the Add Files butto
 Because most images and files in the media library have corresponding links embedded in site’s posts and pages, Media Library Folders does not allow folders to be rename or moved in order to prevent breaking these links. Rather, to rename or move a folder, one needs to create a new folder and move the files from the old folder to the new. During the move process, Media Library Folders will scan the sites standard posts and pages for any links matching the old address of the images or files and update them to the new address.
 
 == Changelog ==
+= 8.0.6 =
+* Added setting to skip WEBP files when syncing
+
+= 8.0.5 =
+* Added wpcf7_uploads to list of folders to hide
+* Modified the upload folder data used when checking for new folders
+* Updated the Upgrade to Pro page
+
+= 8.0.4 =
+* Renamed label for fontawesome to fix problem loading icons when older versions of fontawesome are in use on a site
+
+= 8.0.3 =
+* Tested with Wordpress 6.1
+
+= 8.0.2 =
+* Fixed links on pages with a single tab
+
+= 8.0.1 =
+* Updated upgrade to pro images
+* Improved mobile CSS
+* Fixed issue with moving files to the uploads folder
+
+= 8.0.0 =
+* Implemented new user interface
+* Added optional postmeta database index which is available in the plugin settings
+
+= 7.1.2 =
+* Added code to use a nonce when running the folder data reset process for better security
+* Updated the folder data reset instructions
+
+= 7.1.1 =
+* Tested with WordPress 6.0
+* Removed debugging code
+
 = 7.1.0 =
 * Added code to remove dashes from alt text file names
 * Added strict checking to array search when updating customzer settings 

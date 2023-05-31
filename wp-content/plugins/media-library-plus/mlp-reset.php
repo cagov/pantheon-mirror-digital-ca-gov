@@ -5,7 +5,7 @@ Plugin URI: http://maxgalleria.com
 Description: Plugin for reseting Media Library Folders
 Author: Max Foundry
 Author URI: http://maxfoundry.com
-Version: 7.1.0
+Version: 8.0.6
 Copyright 2015-2021 Max Foundry, LLC (http://maxfoundry.com)
 Text Domain: mlp-reset
 */
@@ -16,12 +16,20 @@ if(!defined("MAXGALLERIA_MEDIA_LIBRARY_FOLDER_TABLE"))
 if(!defined("MAXGALLERIA_MEDIA_LIBRARY_UPLOAD_FOLDER_ID"))
   define("MAXGALLERIA_MEDIA_LIBRARY_UPLOAD_FOLDER_ID", "mgmlp_upload_folder_id");
 
+if(!defined("MAXGALLERIA_MEDIA_LIBRARY_PLUGIN_URL"))
+  define('MAXGALLERIA_MEDIA_LIBRARY_PLUGIN_URL', rtrim(plugin_dir_url(__FILE__), '/'));
+
+define("MLF_RESET_NONCE", "mgmlp_reset_nonce");
+
+add_action('wp_ajax_nopriv_clean_database', 'clean_database');
+add_action('wp_ajax_clean_database', 'clean_database');				
+
 function mlp_reset_menu() {
   add_menu_page(esc_html__('Media Library Folders Reset','mlp-reset'), esc_html__('Media Library Folders Reset','mlp-reset'), 'manage_options', 'mlp-reset', 'mlp_reset' );
   add_submenu_page('mlp-reset', esc_html__('Display Attachment URLs','mlp-reset'), esc_html__('Display Attachment URLs','mlp-reset'), 'manage_options', 'mlpr-show-attachments', 'mlpr_show_attachments');
   add_submenu_page('mlp-reset', esc_html__('Display Folder Data','mlp-reset'), esc_html__('Display Folder Data','mlp-reset'), 'manage_options', 'mlpr-show-folders', 'mlpr_show_folders');
   add_submenu_page('mlp-reset', esc_html__('Check for Folders Without Parent IDs','mlp-reset'), esc_html__('Check for Folders Without Parent IDs','mlp-reset'), 'manage_options', 'mlpr-folders-no-ids', 'mlpr_folders_no_ids');
-  add_submenu_page('mlp-reset', esc_html__('Reset Database','mlp-reset'), esc_html__('Reset Database','mlp-reset'), 'manage_options', 'clean_database', 'clean_database');
+  add_submenu_page('mlp-reset', esc_html__('Reset Media Library Folders Data','mlp-reset'), esc_html__('Reset Media Library Folders Data','mlp-reset'), 'manage_options', 'data-reset', 'data_reset');
 }
 add_action('admin_menu', 'mlp_reset_menu');
 
@@ -31,29 +39,98 @@ function load_mlfr_textdomain() {
 
 add_action('plugins_loaded', 'load_mlfr_textdomain');
 
+function enqueue_mlfr_admin_print_styles() {		
+  wp_enqueue_style('mlf8', esc_url(MAXGALLERIA_MEDIA_LIBRARY_PLUGIN_URL . '/css/mlf.css'));				
+  
+}
+
+add_action('admin_print_styles', 'enqueue_mlfr_admin_print_styles');
+
 function mlp_reset() {
 
 	echo "<h3>" . esc_html__('Media Library Folders Reset Instructions','mlp-reset') . "</h3>";
-  echo "<h4>" . esc_html__('If you need to rescan your database, please deactivate the Media Library Folders plugin and then click Media Library Folders Reset->Reset Database to erase the folder data. Then deactivate Media Library Folders Reset and reactivate Media Library Folders which will perform a fresh scan of your database.','mlp-reset') . "</h4>";
+  echo "<h4>" . esc_html__('If you need to rescan your media library, please deactivate the Media Library Folders plugin and then click Media Library Folders Reset->Media Library Folders Data Reset and click the Reset Folder Data button to erase the folder data. Then deactivate Media Library Folders Reset and reactivate Media Library Folders which will perform a fresh scan of your database.','mlp-reset') . "</h4>";
+  
+}
+
+function data_reset() {
+    
+  ?>
+  <style>
+    #ajaxloader {
+      top: 0 !important;
+    }
+
+  </style>
+
+  <h2><?php esc_html_e('Media Library Folders Data Reset','mlp-reset') ?></h2>
+  
+  <p><?php esc_html_e('To reset the folder data used by Media Library Folders, deactivate Media Library Folders and click the Reset Folder Data button. Once completed, reactivate Media Library Folders.','mlp-reset') ?></p>
+  
+  <a id="mlf-clean-database" class="button">Reset Folder Data</a>
+  <div id="alwrap">
+    <div style="display:none" id="ajaxloader"></div>
+  </div>
+
+  <p id="reset_message"></p>
+  
+	<script>
+	jQuery(document).ready(function(){
+    
+    jQuery(document).on("click", "#mlf-clean-database", function (e) {
+			      
+			jQuery("#reset_message").html('');			
+      jQuery("#ajaxloader").show();
+      
+      jQuery.ajax({
+        type: "POST",
+        async: true,
+        data: { action: 'clean_database', nonce: '<?php echo wp_create_nonce(MLF_RESET_NONCE) ?>' },
+        url : '<?php echo admin_url('admin-ajax.php') ?>',
+        dataType: "html",
+        success: function (data) {
+					jQuery("#reset_message").html(data);						
+          jQuery("#ajaxloader").hide();
+					
+        },
+        error: function (err)
+          { 
+            jQuery("#ajaxloader").hide();
+            alert(err.responseText);
+          }
+      });                
+    });	
+    
+    
+	});  
+  </script>   
+  
+
+  <?php
   
 }
 
 function clean_database() {  
     global $wpdb;
+    $message = '';
     
-    $sql = "delete from $wpdb->prefix" . "options where option_name = 'mgmlp_upload_folder_name'";
+    if ( !wp_verify_nonce($_POST['nonce'], MLF_RESET_NONCE)) {
+      exit(esc_html__('Missing nonce! Please refresh this page.','maxgalleria-media-library'));
+    }
+            
+    $sql = "delete from $wpdb->options where option_name = 'mgmlp_upload_folder_name'";
     $wpdb->query($sql);
     
-    $sql = "delete from $wpdb->prefix" . "options where option_name = 'mgmlp_upload_folder_id'";
+    $sql = "delete from $wpdb->options where option_name = 'mgmlp_upload_folder_id'";
     $wpdb->query($sql);
 		
-    $sql = "delete from $wpdb->prefix" . "options where option_name = 'mgmlp_database_checked'";
+    $sql = "delete from $wpdb->options where option_name = 'mgmlp_database_checked'";
     $wpdb->query($sql);
 		
-    $sql = "delete from $wpdb->prefix" . "options where option_name = 'mgmlp_postmeta_updated'";
+    $sql = "delete from $wpdb->options where option_name = 'mgmlp_postmeta_updated'";
     $wpdb->query($sql);
 				        
-    echo esc_html__('Deleteing mgmlp_folders','mlp-reset')  . "<br>";
+    $message .= esc_html__('Deleteing mgmlp_folders','mlp-reset')  . "<br>";
     
     $sql = "TRUNCATE TABLE $wpdb->prefix" . "mgmlp_folders";
     $wpdb->query($sql);
@@ -61,7 +138,7 @@ function clean_database() {
     $sql = "DROP TABLE $wpdb->prefix" . "mgmlp_folders";    
     $wpdb->query($sql);
 		
-    $sql = "select ID from {$wpdb->prefix}posts where post_type = 'mgmlp_media_folder'";
+    $sql = "select ID from $wpdb->posts where post_type = 'mgmlp_media_folder'";
 		
     $rows = $wpdb->get_results($sql);
 		if($rows) {
@@ -70,11 +147,14 @@ function clean_database() {
 			}
 		}
 				    
-    echo esc_html__('Removing mgmlp_media_folder posts','mlp-reset')  . "<br>";
-    $sql = "delete from $wpdb->prefix" . "posts where post_type = 'mgmlp_media_folder'";
+    $message .= esc_html__('Removing mgmlp_media_folder posts','mlp-reset')  . "<br>";
+    $sql = "delete from $wpdb->posts where post_type = 'mgmlp_media_folder'";
     $wpdb->query($sql);
     
-    echo esc_html__('Done. You can now reactivate Media Library Folders.','mlp-reset')  . "<br>";
+    $message .= esc_html__('Done. You can now reactivate Media Library Folders.','mlp-reset')  . "<br>";
+    echo $message;
+    
+    die();
   
 }
 

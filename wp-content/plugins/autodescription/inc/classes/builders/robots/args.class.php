@@ -8,7 +8,7 @@ namespace The_SEO_Framework\Builders\Robots;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2021 - 2022 Sybre Waaijer, CyberWire B.V. (https://cyberwire.nl/)
+ * Copyright (C) 2021 - 2023 Sybre Waaijer, CyberWire B.V. (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -113,15 +113,10 @@ final class Args extends Factory {
 					yield 'globals_post_type' => $tsf->is_post_type_robots_set( $type, \get_post_type( $args['id'] ) );
 			}
 
-		index_protection: if ( $asserting_noindex ) {
-			// We assert options here for a jump to index_protection might be unaware.
-			if ( static::$options & \The_SEO_Framework\ROBOTS_IGNORE_PROTECTION )
-				goto after_index_protection;
-
+		index_protection: if ( $asserting_noindex && ! ( static::$options & \The_SEO_Framework\ROBOTS_IGNORE_PROTECTION ) ) {
 			if ( ! $args['taxonomy'] )
 				yield from static::assert_noindex_query_pass( 'protected' );
 		}
-		after_index_protection:;
 
 		end:;
 	}
@@ -145,7 +140,7 @@ final class Args extends Factory {
 
 		switch ( $pass ) :
 			case '404':
-				yield '404' => empty( \get_term( $args['id'], $args['taxonomy'] )->count );
+				yield '404' => ! static::$tsf->is_term_populated( $args['id'], $args['taxonomy'] );
 				break;
 
 			case 'protected':
