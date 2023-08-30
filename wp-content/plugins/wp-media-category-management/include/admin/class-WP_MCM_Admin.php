@@ -493,9 +493,12 @@ if ( !class_exists( 'WP_MCM_Admin' ) ) {
         public function wp_mcm_admin_scripts()
         {
             $this->debugMP( 'msg', __FUNCTION__ . ' started.' );
-            $min = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min' );
-            $min = '';
-            wp_enqueue_style( 'wp-mcm-admin', WP_MCM_PLUGIN_URL . '/css/wp-mcm-admin-styles' . $min . '.css', false );
+            wp_enqueue_style(
+                'wp-mcm-admin',
+                WP_MCM_PLUGIN_URL . '/css/wp-mcm-admin-styles.css',
+                false,
+                WP_MCM_VERSION_NUM
+            );
             wp_enqueue_script( 'wp_mcm_script', WP_MCM_PLUGIN_URL . '/js/wp-mcm-admin.js' );
         }
         

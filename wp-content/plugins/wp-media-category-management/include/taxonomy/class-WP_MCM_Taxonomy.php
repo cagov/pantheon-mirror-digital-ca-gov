@@ -151,7 +151,7 @@ if ( !class_exists( 'WP_MCM_Taxonomy' ) ) {
         {
             global  $wp_query ;
             global  $wp_mcm_options ;
-            $this->debugMP( 'pr', __FUNCTION__ . ' is_search() = ' . is_search() . ', is_archive() = ' . is_archive() . ', query->query = ', $query->query );
+            $this->debugMP( 'pr', __FUNCTION__ . ' query->is_search() = ' . $query->is_search() . ', query->is_archive() = ' . $query->is_archive() . ', query->query = ', $query->query );
             // $this->debugMP('pr',__FUNCTION__ . ' is_search() = ' . is_search() . ', is_archive() = ' . is_archive() . ', query = ', $query);
             // $this->debugMP('pr',__FUNCTION__ . ' is_search() = ' . is_search() . ', is_archive() = ' . is_archive() . ', wp_query = ', $wp_query);
             $this->mcm_taxonomy_category_to_find = false;
@@ -177,7 +177,7 @@ if ( !class_exists( 'WP_MCM_Taxonomy' ) ) {
             if ( $query->is_main_query() ) {
                 // Handle query if it is used for media is_archive
                 
-                if ( is_archive() ) {
+                if ( $query->is_archive() ) {
                     // Get media taxonomy and categories to find
                     $media_taxonomy = $this->mcm_get_media_taxonomy();
                     $media_categories = $query->get( $media_taxonomy, '__not_found' );
@@ -205,25 +205,27 @@ if ( !class_exists( 'WP_MCM_Taxonomy' ) ) {
                 
                 // Add media for search only when desired
                 
-                if ( is_search() && $wp_mcm_options->is_true( 'wp_mcm_search_media_library' ) ) {
+                if ( !is_admin() && $query->is_search() && $wp_mcm_options->is_true( 'wp_mcm_search_media_library' ) ) {
                     // Add attachment to post_type
                     $query_post_type = $query->get( 'post_type', '__not_found' );
-                    if ( $query_post_type == '__not_found' ) {
+                    if ( $query_post_type === '__not_found' || $query_post_type === '' ) {
                         $query_post_type = 'post';
                     }
                     $query_post_type = $this->mcm_query_vars_add_values( $query_post_type, 'attachment' );
                     $query->set( 'post_type', $query_post_type );
+                    $this->debugMP( 'pr', __FUNCTION__ . ' query_post_type = ', $query_post_type );
                     // Add inherit to post_status
                     $query_post_status = $query->get( 'post_status', '__not_found' );
-                    if ( $query_post_status == '__not_found' ) {
+                    if ( $query_post_status === '__not_found' || $query_post_status === '' ) {
                         $query_post_status = 'publish';
                     }
                     $query_post_status = $this->mcm_query_vars_add_values( $query_post_status, 'inherit' );
                     $query->set( 'post_status', $query_post_status );
+                    $this->debugMP( 'pr', __FUNCTION__ . ' query_post_status = ', $query_post_status );
                 }
                 
-                $this->debugMP( 'pr', __FUNCTION__ . ' mcm_taxonomy_category_to_find = ' . $this->mcm_taxonomy_category_to_find . '; query->query = ', $query->query );
-                // $this->debugMP('pr',__FUNCTION__ . ' mcm_taxonomy_category_to_find = ' . $this->mcm_taxonomy_category_to_find . '; query->query_vars = ', $query->query_vars );
+                // $this->debugMP('pr',__FUNCTION__ . ' mcm_taxonomy_category_to_find = ' . $this->mcm_taxonomy_category_to_find . '; query->query = ', $query->query );
+                $this->debugMP( 'pr', __FUNCTION__ . ' mcm_taxonomy_category_to_find = ' . $this->mcm_taxonomy_category_to_find . '; query->query_vars = ', $query->query_vars );
             }
         
         }

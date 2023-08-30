@@ -41,7 +41,7 @@
 #wp-mcm-settings-form input[type="week"],
 #wp-mcm-settings-form select,
 textarea {
-	min-width: 267px;
+	/* min-width: 267px; */
     width: 45%;
 }
 

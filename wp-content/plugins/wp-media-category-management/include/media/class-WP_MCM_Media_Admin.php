@@ -306,9 +306,12 @@ if ( !class_exists( 'WP_MCM_Media_Admin' ) ) {
 
 					// Check for error
 					if ( is_wp_error( $add_result ) ) {
-						return $add_result;
+						$this->debugMP('pr',__FUNCTION__ . ' for post_ID(' . $post_ID . '), media_taxonomy(' . $media_taxonomy . '), default_category(' . $default_category . ') => is_wp_error:', $add_result);
+						return;
 					}
 				}
+
+				$this->debugMP('msg',__FUNCTION__ . ' for post_ID(' . $post_ID . '), media_taxonomy(' . $media_taxonomy . '), default_category(' . $default_category . ')!!!' );
 
 			}
 

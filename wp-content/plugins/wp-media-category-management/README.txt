@@ -4,7 +4,7 @@ Donate link: https://www.de-baat.nl/WP_MCM
 Tags: media library, bulk action, bulk toggle, toggle category, taxonomy, taxonomies, attachment, media category, media categories, media tag, media tags, media taxonomy, media taxonomies, media filter, media organizer, media types, media uploader, custom, media management, attachment management, files management, user experience, wp-admin, admin, user media management, export
 Requires at least: 5.0
 Tested up to: 6.2.2
-Stable tag: 2.1.1
+Stable tag: 2.1.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -101,6 +101,15 @@ Use the `[wp_mcm]` shortcode. Various shortcode uses are explained in the **WP M
 15. The admin page showing the options for Import - Export using this plugin.
 
 == Changelog ==
+
+= 2.1.3 =
+* Fixed issue with searching for posts
+* Updated Freemius sdk to v2.5.10
+
+= 2.1.2 =
+* Fixed issue with too wide fields in attachment details
+* Fixed issue with undefined variable
+* Updated Freemius sdk to v2.5.9
 
 = 2.1.1 =
 * Fixed issue when searching media on front page

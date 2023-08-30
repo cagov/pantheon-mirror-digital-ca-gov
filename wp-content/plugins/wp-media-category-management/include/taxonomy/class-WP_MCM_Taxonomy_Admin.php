@@ -227,14 +227,20 @@ if ( !class_exists( 'WP_MCM_Taxonomy_Admin' ) ) {
                 }
                 $terms = get_object_term_cache( $post->ID, $taxonomy );
                 if ( false === $terms ) {
-                    $terms = wp_get_object_terms( $post->ID, $taxonomy, $t['args'] );
+                    $terms = wp_get_object_terms( $post->ID, $taxonomy, $cur_taxonomy['args'] );
                 }
                 // Get the values in a list
                 $values = array();
-                foreach ( $terms as $term ) {
-                    $values[] = $term->slug;
+                
+                if ( is_array( $terms ) ) {
+                    foreach ( $terms as $term ) {
+                        $values[] = $term->slug;
+                    }
+                    $cur_taxonomy['value'] = join( ', ', $values );
+                } else {
+                    $cur_taxonomy['value'] = $terms;
                 }
-                $cur_taxonomy['value'] = join( ', ', $values );
+                
                 $cur_taxonomy['show_in_edit'] = false;
                 
                 if ( $cur_taxonomy['hierarchical'] || $taxonomy == WP_MCM_TAGS_TAXONOMY ) {

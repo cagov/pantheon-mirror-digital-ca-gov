@@ -108,7 +108,7 @@ if ( !class_exists( 'WP_MCM_Media_List' ) ) {
          */
         function mcm_wp_ajax_action_row_toggle()
         {
-            $this->debugMP( 'pr', __FUNCTION__ . ' _REQUEST = ', $_REQUEST );
+            // $this->debugMP('pr',__FUNCTION__ . ' _REQUEST = ', $_REQUEST );
             // _wpnonce check for an extra layer of security, the function will exit if it fails
             if ( !isset( $_REQUEST['_wpnonce'] ) ) {
                 wp_send_json_error();
@@ -443,7 +443,7 @@ if ( !class_exists( 'WP_MCM_Media_List' ) ) {
             global  $wp_mcm_options ;
             // Get media taxonomy
             // $this->media_taxonomy = $wp_mcm_taxonomy->mcm_get_media_taxonomy();
-            $this->debugMP( 'pr', __FUNCTION__ . ' media_taxonomy = ' . $this->media_taxonomy . ', post_type = ' . $post_type . ', columns = ', $columns );
+            // $this->debugMP('pr',__FUNCTION__ . ' media_taxonomy = ' . $this->media_taxonomy . ', post_type = ' . $post_type . ', columns = ', $columns);
             // Filter the columns to show
             $filtered = array();
             foreach ( $columns as $key => $value ) {
@@ -470,7 +470,7 @@ if ( !class_exists( 'WP_MCM_Media_List' ) ) {
                 }
             
             }
-            $this->debugMP( 'pr', __FUNCTION__ . ' media_taxonomy = ' . $this->media_taxonomy . ' filtered = ', $filtered );
+            // $this->debugMP('pr',__FUNCTION__ . ' media_taxonomy = ' . $this->media_taxonomy . ' filtered = ', $filtered);
             return $filtered;
         }
         
@@ -488,7 +488,7 @@ if ( !class_exists( 'WP_MCM_Media_List' ) ) {
             global  $wp_mcm_options ;
             // Get media taxonomy
             // $this->media_taxonomy = $wp_mcm_taxonomy->mcm_get_media_taxonomy();
-            $this->debugMP( 'pr', __FUNCTION__ . ' media_taxonomy = ' . $this->media_taxonomy . ' columns = ', $columns );
+            // $this->debugMP('pr',__FUNCTION__ . ' media_taxonomy = ' . $this->media_taxonomy . ' columns = ', $columns);
             // Mark the taxonomy columns
             $marked_columns = array();
             foreach ( $columns as $key => $value ) {
@@ -515,7 +515,7 @@ if ( !class_exists( 'WP_MCM_Media_List' ) ) {
                         break;
                 }
             }
-            $this->debugMP( 'pr', __FUNCTION__ . ' media_taxonomy = ' . $this->media_taxonomy . ' marked_columns = ', $marked_columns );
+            // $this->debugMP('pr',__FUNCTION__ . ' media_taxonomy = ' . $this->media_taxonomy . ' marked_columns = ', $marked_columns);
             return $marked_columns;
         }
         
@@ -533,7 +533,7 @@ if ( !class_exists( 'WP_MCM_Media_List' ) ) {
             global  $wp_mcm_options ;
             // Get media taxonomy
             // $this->media_taxonomy = $wp_mcm_taxonomy->mcm_get_media_taxonomy();
-            $this->debugMP( 'pr', __FUNCTION__ . ' media_taxonomy = ' . $this->media_taxonomy . ' columns = ', $columns );
+            // $this->debugMP('pr',__FUNCTION__ . ' media_taxonomy = ' . $this->media_taxonomy . ' columns = ', $columns);
             return $columns;
         }
         
@@ -552,7 +552,7 @@ if ( !class_exists( 'WP_MCM_Media_List' ) ) {
             global  $wp_mcm_options ;
             // Get media taxonomy
             // $this->media_taxonomy = $wp_mcm_taxonomy->mcm_get_media_taxonomy();
-            $this->debugMP( 'msg', __FUNCTION__ . ' media_taxonomy = ' . $this->media_taxonomy . ', column_name = ' . $column_name . ', post_id = ' . $post_id . '.' );
+            // $this->debugMP('msg',__FUNCTION__ . ' media_taxonomy = ' . $this->media_taxonomy . ', column_name = ' . $column_name . ', post_id = ' . $post_id . '.' );
             // Strip WP_MCM_MEDIA_TAXONOMY_PREFIX
             
             if ( 0 === strpos( $column_name, WP_MCM_MEDIA_TAXONOMY_PREFIX ) ) {
@@ -600,7 +600,7 @@ if ( !class_exists( 'WP_MCM_Media_List' ) ) {
         {
             // Create a taxonomy_id
             $taxonomy_id = WP_MCM_MEDIA_TAXONOMY_PREFIX . '___' . $taxonomy_key . '___' . $post_id;
-            $this->debugMP( 'msg', __FUNCTION__ . ' taxonomy_id = ' . $taxonomy_id );
+            // $this->debugMP('msg',__FUNCTION__ . ' taxonomy_id = ' . $taxonomy_id);
             return $taxonomy_id;
         }
         
@@ -615,7 +615,7 @@ if ( !class_exists( 'WP_MCM_Media_List' ) ) {
          */
         public function mcm_create_column_taxonomy( $taxonomy, $post_id )
         {
-            $this->debugMP( 'msg', __FUNCTION__ . ' taxonomy = ' . $taxonomy . ', post_id = ' . $post_id . '.' );
+            // $this->debugMP('msg',__FUNCTION__ . ' taxonomy = ' . $taxonomy . ', post_id = ' . $post_id . '.' );
             // Get the taxonomies for this post_id
             $terms = get_the_terms( $post_id, $taxonomy );
             
