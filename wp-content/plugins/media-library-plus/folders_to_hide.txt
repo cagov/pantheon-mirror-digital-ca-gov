@@ -16,8 +16,10 @@ bpfb
 brizy
 buddypress
 cache
+code-profiler
 copysafe-pdf
 dynamic_avia
+edd
 elementor
 essential-addons-elementor
 et_temp
@@ -35,6 +37,7 @@ h5p
 html_to_wp
 hummingbird-assets
 imagecleanup
+importwp
 ithemes-security
 iw-backup
 js_composer
@@ -52,6 +55,7 @@ pb_backupbuddy
 planso-forms
 pluginbuddy_mobile
 photo-gallery
+protected-content
 pum
 redux
 revslider
@@ -78,6 +82,7 @@ wordpress-popular-posts
 wpallimport
 wpallexport
 wpcf7_captcha
+wpcf7_uploads
 wpmc-trash
 wpdiscuz
 wpp-custom-code

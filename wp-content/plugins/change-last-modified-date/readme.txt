@@ -2,9 +2,9 @@
 Contributors: djuric
 Tags: last modified, edit date, edit last modified
 Requires at least: 5.1
-Tested up to: 5.6
+Tested up to: 6.2
 Requires PHP: 5.6
-Stable tag: 1.4.2
+Stable tag: 1.4.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -49,3 +49,11 @@ define( 'CLM_DATE_POST_TYPES', ['post-type-slug-1', 'post-type-slug-2'] );
 
 = 1.4.2 =
 * Fix plugin crashing for custom post types without custom fields support declared
+
+= 1.4.3 =
+* Update wp-scripts to v26.1.0
+* Remove/update deprected props and functions
+
+= 1.4.4 =
+* Update wp-scripts to v26.1.0
+* Revert back to using __experimentalGetSettings from @wordpress/date
