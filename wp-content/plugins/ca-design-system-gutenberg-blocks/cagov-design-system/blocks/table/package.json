@@ -12,9 +12,9 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@open-wc/testing": "^2.5.33",
-    "@web/test-runner": "^0.13.17",
-    "@web/test-runner-puppeteer": "^0.10.2",
+    "@open-wc/testing": "^5.0.0",
+    "@web/test-runner": "^1.0.0",
+    "@web/test-runner-puppeteer": "^1.0.0",
     "sass": "^1.41.1"
   }
 }
